@@ -33,14 +33,13 @@ before_build:
   - cd ..
   - md ament_boost_process_ws
   - md ament_boost_process_ws\src
-  - mv ament-boost-process ament_boost_process_ws\src\ament_boost_process
+  - ren ament-boost-process ament_boost_process
+  - mv ament_boost_process ament_boost_process_ws\src
   - cd ament_boost_process_ws
 
 build_script:
-  - cd src/ament_boost_process_ws
   - md build
   - cd build
-  - cmake .. -G"%GENERATOR%"
+  - cmake ../src/ament_boost_process -G"%GENERATOR%"
   - cmake --build . --config %CONFIG%
-  - cd ../../..
-  # - ament build
+  - msbuild INSTALL.vcxproj

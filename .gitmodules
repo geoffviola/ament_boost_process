@@ -1,3 +1,0 @@
-[submodule "src/boost_process"]
-	path = src/boost_process
-	url = git://github.com/klemens-morgenstern/boost-process

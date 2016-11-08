@@ -41,7 +41,7 @@ before_build:
   - ps: Invoke-WebRequest https://github.com/geoffviola/ament_boost/releases/download/0.0.0/ament_boost_x64_windows.zip -OutFile ament_boost.zip
   - 7z x -bso0 ament_boost.zip
   - ren ament_boost_x64_windows install
-  - call install\setup.bat
+  - call install\local_setup.bat
 
 build_script:
   - ament build

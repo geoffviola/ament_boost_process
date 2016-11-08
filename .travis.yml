@@ -4,8 +4,8 @@ services:
 os:
 - linux
 script:
-- docker run -it osrf/ros2 /bin/bash -c "cd;mkdir -p temp_ws/src;cd temp_ws;wget https://github.com/geoffviola/ament_boost/releases/download/0.0.0/ament_boost_x64_ubuntu.tar.bz2;tar
-  -xjf ament_boost_x64_ubuntu.tar.bz2;mv ament_boost_x64_ubuntu install;source install/local_setup.bash;cd
+- docker run -it osrf/ros2 /bin/bash -c "cd;mkdir -p temp_ws/src;cd temp_ws;wget https://github.com/geoffviola/ament_boost/releases/download/0.0.0/ament_boost_ubuntu.tar.bz2;tar
+  -xjf ament_boost_ubuntu.tar.bz2;mv ament_boost_ubuntu install;source install/local_setup.bash;cd
   src;apt-get update;apt-get install -y software-properties-common;add-apt-repository
   -y ppa:git-core/ppa;apt-get update;apt-get install -y git;git clone https://github.com/geoffviola/ament_boost_process;cd
   ..;ament build;ament test;cp -r install ament_boost_process_ubuntu;tar -cjSf ament_boost_process_ubuntu.tar.bz2 ament_boost_process_ubuntu"

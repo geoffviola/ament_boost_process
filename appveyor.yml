@@ -36,9 +36,9 @@ before_build:
   - md temp\ament_boost_process
   - for /f "delims=" %%a IN ('dir "." /b') do if NOT "temp" == "%%a" move "%%a" temp\ament_boost_process\
   - ren temp src
-  - ps: Invoke-WebRequest https://github.com/geoffviola/ament_boost/releases/download/0.0.0/ament_boost_x64_windows.zip -OutFile ament_boost.zip
+  - ps: Invoke-WebRequest https://github.com/geoffviola/ament_boost/releases/download/0.0.0/ament_boost_windows.zip -OutFile ament_boost.zip
   - 7z x -bso0 ament_boost.zip
-  - ren ament_boost_x64_windows install
+  - ren ament_boost_windows install
   - call install\local_setup.bat
 
 build_script:

@@ -32,12 +32,9 @@ install:
   - call C:\dev\ros2\setup.bat
 
 before_build:
-  - cd ..
-  - md ament_boost_process_ws
-  - md ament_boost_process_ws\src
-  - ren ament-boost-process ament_boost_process
-  - mv ament_boost_process ament_boost_process_ws\src
-  - cd ament_boost_process_ws
+  - md src
+  - md src\ament_boost_process
+  - for /f "delims=" %%a IN ('dir "." /b') do if NOT "src" == "%%a" move "%%a" src\ament_boost_process\
   - ps: Invoke-WebRequest https://github.com/geoffviola/ament_boost/releases/download/0.0.0/ament_boost_x64_windows.zip -OutFile ament_boost.zip
   - 7z x -bso0 ament_boost.zip
   - ren ament_boost_x64_windows install

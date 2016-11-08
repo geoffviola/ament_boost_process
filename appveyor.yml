@@ -55,3 +55,14 @@ test: ament test
 artifacts:
   - path: ament_boost_process_windows.zip
     name: ament_boost_process_windows
+
+deploy:
+  release: $(APPVEYOR_REPO_TAG_NAME)
+  provider: GitHub
+  auth_token:
+    secure: uPmcYA+EiDxIJIyXU9HsXMOn00rRjdWjYaYB7kd77BZSWQOgitaJONWInELIDxdw
+  artifact: ament_boost_process_windows.zip
+  force_update: true
+  on:
+    branch: master
+    appveyor_repo_tag: true

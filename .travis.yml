@@ -1,11 +1,22 @@
 sudo: required
-
 services:
-  - docker
-
+- docker
 os:
-  - linux
-
+- linux
 script:
-  - docker run -it osrf/ros2 /bin/bash -c "cd;mkdir -p temp_ws/src;cd temp_ws;wget https://github.com/geoffviola/ament_boost/releases/download/0.0.0/ament_boost_x64_ubuntu.tar.bz2;tar -xjf ament_boost_x64_ubuntu.tar.bz2;mv ament_boost_x64_ubuntu install;source install/local_setup.bash;cd src;apt-get update;apt-get install -y software-properties-common;add-apt-repository -y ppa:git-core/ppa;apt-get update;apt-get install -y git;git clone https://github.com/geoffviola/ament_boost_process;cd ..;ament build;ament test;tar -cjSf ament_boost_process_ubuntu.tar.bz2 ament_boost_process_ubuntu"
-  - docker cp $(docker ps -l -q):root/temp_ws/ament_boost_process_ubuntu.tar.bz2 .
+- docker run -it osrf/ros2 /bin/bash -c "cd;mkdir -p temp_ws/src;cd temp_ws;wget https://github.com/geoffviola/ament_boost/releases/download/0.0.0/ament_boost_x64_ubuntu.tar.bz2;tar
+  -xjf ament_boost_x64_ubuntu.tar.bz2;mv ament_boost_x64_ubuntu install;source install/local_setup.bash;cd
+  src;apt-get update;apt-get install -y software-properties-common;add-apt-repository
+  -y ppa:git-core/ppa;apt-get update;apt-get install -y git;git clone https://github.com/geoffviola/ament_boost_process;cd
+  ..;ament build;ament test;tar -cjSf ament_boost_process_ubuntu.tar.bz2 ament_boost_process_ubuntu"
+- docker cp $(docker ps -l -q):root/temp_ws/ament_boost_process_ubuntu.tar.bz2 .
+deploy:
+  provider: releases
+  api_key:
+    secure: gVZsEEem0Y8eNT3LXvhrCMtqf33nRh6pRn/BNqseBYAlgJ3w1KAYh/r4/5oGCdlWXjXdqELosfS5ro5GkpnFtubQwY6agd3/FPJi9zg4GMPL1G8TvYyPgxR8nX0QWjl2/So/CtaFgnyCJLUYAZMHAng9H3hH3dRqODOP2gAy0S8odh3/JVXNOyemHWP4aAC7Hje6hZgbSEFl7GNrEHW3aZMx5NGaD5dFIn0L4LaIq1huKVSvPnUVOc5Nr5U/sxLg+RU5dWfiGnrOuQ1AZC4dtuzqmnYH5ieshZyoLXPBaLZvxVp0NWV31Zqk7qWvoee2JEDXrBa7Dj5jvA0R+E6OoAC2SVNV4Sp7K8LUmuA/BaY6kPKCgyfleq3WmfewMU3nIn/zgapRGVTmIYqjl7KyLx8ez3AL6fKY91kbAl1qDAWo4NI6iwPwR4pYXneiaKmTDFiMfkw3CpKLTXCOb2hp32mP+AVs26UmE+8XSto4odnBFd54pBQu2h9jZUCWsVa3XMHE3ggaqhiZYKlcZB9Lq64vDvo40Lc4kCVfKbyhDwEky8sqyju7IPrh6EHBTevnvQiyhW9D95jjAcOkxgl69kH1lmcqdOiVA22gRm9rUIcjin4F+IvyJpChbZwHIFOCkC4rmQGG9gLLiljm3FgvLVZpEDq7I7qE6sB86PkMc10=
+  file: ament_boost_process_ubuntu.tar.bz2
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: geoffviola/ament_boost_process
+  overwrite: true

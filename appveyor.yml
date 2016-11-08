@@ -24,9 +24,11 @@ install:
   - set PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%
   - set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
   - call "C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\Tools\vsvars32.bat"
-  - ps: $local_setup_bat_content = Get-Content C:\dev\ros2\local_setup.bat -Raw
-  - ps: $local_setup_bat_content = $local_setup_bat_content -replace "C:\\ProgramData\\chocolatey\\lib\\python3\\tools\\python.exe", "python"
-  - ps: $local_setup_bat_content | Out-File -Encoding DEFAULT -FilePath C:\dev\ros2\local_setup.bat
+  - ps: |
+      gci -r -path "C:\dev\ros2" -include "*.bat","*.py" |
+      foreach-object { $a = $_.fullname; ( get-content $a ) |
+      foreach-object { $_ -replace "C:\\ProgramData\\chocolatey\\lib\\python3\\tools\\python.exe","C:\\Python35-x64\\python.exe" }  |
+      set-content $a }
   - call C:\dev\ros2\setup.bat
 
 before_build:
@@ -36,10 +38,20 @@ before_build:
   - ren ament-boost-process ament_boost_process
   - mv ament_boost_process ament_boost_process_ws\src
   - cd ament_boost_process_ws
+  - ps: Invoke-WebRequest https://github.com/geoffviola/ament_boost/releases/download/0.0.0/ament_boost_x64_windows.zip -OutFile ament_boost.zip
+  - 7z x -bso0 ament_boost.zip
+  - ren ament_boost_x64_windows install
+  - call install\setup.bat
 
 build_script:
-  - md build
-  - cd build
-  - cmake ../src/ament_boost_process -G"%GENERATOR%"
-  - cmake --build . --config %CONFIG%
-  - msbuild INSTALL.vcxproj
+  - ament build
+
+after_build:
+  - xcopy /e /c /i /y install ament_boost_process_windows
+  - 7z a -bso0 -tzip ament_boost_process_windows.zip ament_boost_process_windows
+
+test: ament test
+
+artifacts:
+  - path: ament_boost_process_windows.zip
+    name: ament_boost_process_windows

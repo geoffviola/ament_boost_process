@@ -1,11 +1,11 @@
 sudo: required
 
 services:
-    - docker
+  - docker
 
 os:
-    - linux
+  - linux
 
 script:
-    - docker run -it osrf/ros2 /bin/bash -c "cd;mkdir -p temp_ws/src;cd temp_ws/src;apt-get update;apt-get install -y software-properties-common;add-apt-repository -y ppa:git-core/ppa;apt-get update;apt-get install -y git;git clone https://github.com/geoffviola/ament_boost_process;cd ..;ament build;tar -zcp -f install.tar install"
-    - docker cp $(docker ps -l -q):root/temp_ws/install.tar .
+  - docker run -it osrf/ros2 /bin/bash -c "cd;mkdir -p temp_ws/src;cd temp_ws;curl -O https://github.com/geoffviola/ament_boost/releases/download/0.0.0/ament_boost_x64_ubuntu.tar.bz2;tar -xjf ament_boost_x64_ubuntu.tar.bz2;mv ament_boost_x64_ubuntu install;source install/setup.bash;cd src;apt-get update;apt-get install -y software-properties-common;add-apt-repository -y ppa:git-core/ppa;apt-get update;apt-get install -y git;git clone https://github.com/geoffviola/ament_boost_process;cd ..;ament build;ament test;tar -cjSf ament_boost_process_ubuntu.tar.bz2 ament_boost_process_ubuntu"
+  - docker cp $(docker ps -l -q):root/temp_ws/ament_boost_process_ubuntu.tar.bz2 .

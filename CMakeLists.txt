@@ -7,16 +7,19 @@ find_package(ament_boost REQUIRED)
 configure_file(
   ${CMAKE_CURRENT_SOURCE_DIR}/git_submodule_update_no_ignore_error.cmake.in
   ${CMAKE_CURRENT_BINARY_DIR}/git_submodule_update_no_ignore_error.cmake
-  COPYONLY
-)
+  COPYONLY)
 
-add_custom_target(git_boost_subsubmodule_dl ALL
-    ${CMAKE_COMMAND} -P
-    "${CMAKE_CURRENT_BINARY_DIR}/git_submodule_update_no_ignore_error.cmake")
+add_custom_target(git submodule update --init --recursive
+  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
 install(
-    DIRECTORY "${CMAKE_SOURCE_DIR}/src/boost_process/include/boost"
-    DESTINATION include
-    MESSAGE_NEVER)
+  DIRECTORY "${CMAKE_SOURCE_DIR}/src/boost_process/include/boost"
+  DESTINATION include
+  MESSAGE_NEVER)
+
+if(BUILD_TESTING)
+  find_package(ament_lint_auto REQUIRED)
+  ament_lint_auto_find_test_dependencies()
+endif()
 
 ament_package()

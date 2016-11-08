@@ -15,6 +15,8 @@ matrix:
   fast_finish: true
 
 install:
+  - git --version
+  - git submodule update --init
   - md C:\dev
   - ps: Invoke-WebRequest https://github.com/osrf/opensplice/releases/download/6.4.0-0/opensplice-Win64VS2013-with-VS2015-patch.zip -OutFile C:\dev\opensplice.zip
   - 7z x -bso0 C:\dev\opensplice.zip -oC:\dev

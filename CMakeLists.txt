@@ -6,7 +6,7 @@ find_package(ament_boost REQUIRED)
 
 add_custom_target(update_subrepo ALL
   git submodule update --init --recursive
-  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+  WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}")
 
 install(
   DIRECTORY "${CMAKE_SOURCE_DIR}/src/boost_process/include/boost"

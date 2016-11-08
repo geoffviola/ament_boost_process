@@ -42,6 +42,14 @@ before_build:
   - call install\local_setup.bat
 
 build_script:
+  - dir
+  - dir src
+  - dir src\ament_boost_process
+  - type src\ament_boost_process\.gitmodules
+  - dir src\ament_boost_process\src\boost
+  - cd src\ament_boost_process
+  - git submodule update --init --recursive
+  - cd ..\..
   - ament build
 
 after_build:

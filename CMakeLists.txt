@@ -4,11 +4,6 @@ project(ament_boost_process)
 find_package(ament_cmake REQUIRED)
 find_package(ament_boost REQUIRED)
 
-configure_file(
-  ${CMAKE_CURRENT_SOURCE_DIR}/git_submodule_update_no_ignore_error.cmake.in
-  ${CMAKE_CURRENT_BINARY_DIR}/git_submodule_update_no_ignore_error.cmake
-  COPYONLY)
-
 add_custom_target(git submodule update --init --recursive
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 
